@@ -1,316 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Poojitha | Portfolio</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Poojitha | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ===== RESET ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+:root{
+  --green:#143d2c;
+  --accent:#f4b400;
+  --bg:#f6f5f2;
+  --card:#ffffff;
+  --text:#1f1f1f;
 }
 
-body {
-    background: #f4f1eb;
-    color: #1f1f1f;
-    line-height: 1.6;
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text)}
+section{padding:100px 10%;}
+
+/* NAV */
+nav{
+position:fixed;top:0;left:0;width:100%;z-index:1000;
+display:flex;justify-content:space-between;align-items:center;
+padding:18px 10%;background:rgba(20,61,44,.95);backdrop-filter:blur(8px);
+box-shadow:0 6px 18px rgba(0,0,0,.12);
 }
+nav h2{color:#fff;font-weight:600;letter-spacing:.5px}
+nav ul{display:flex;gap:28px;list-style:none}
+nav a{color:#fff;text-decoration:none;font-weight:500;position:relative}
+nav a::after{content:"";position:absolute;width:0;height:2px;background:var(--accent);left:0;bottom:-6px;transition:.3s}
+nav a:hover::after{width:100%}
 
-/* ===== CONTAINER ===== */
-section {
-    padding: 80px 10%;
+/* HERO */
+.hero{
+height:100vh;display:flex;flex-direction:column;justify-content:center;
+padding-top:120px;
+background:linear-gradient(120deg,#143d2c 0%,#1c5c44 100%);
+color:#fff
 }
-
-/* ===== NAVBAR ===== */
-/* ===== NAVBAR ===== */
-nav {
-    background: #143d2c;
-    padding: 20px 10%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    position: fixed;          /* Makes it stay on top */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.hero h1{font-size:48px;font-weight:700;margin-bottom:10px}
+.hero h3{font-weight:400;max-width:650px;margin-bottom:30px;color:#e5e5e5}
+.btn{
+background:var(--accent);color:#000;padding:14px 26px;border-radius:30px;
+text-decoration:none;font-weight:600;display:inline-block;transition:.25s
 }
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(0,0,0,.2)}
 
+/* TITLES */
+.section-title{font-size:34px;margin-bottom:50px;position:relative;display:inline-block}
+.section-title::after{content:"";width:60px;height:4px;background:var(--accent);position:absolute;left:0;bottom:-12px}
 
-nav h1 {
-    color: #ffffff;
-    font-size: 24px;
-    font-weight: 600;
-    position: relative;
+/* ABOUT */
+.about p{max-width:900px;line-height:1.8;color:#444}
+
+/* SKILLS */
+.skills-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px}
+.skill-card{
+background:var(--card);padding:30px;border-radius:18px;text-align:center;
+box-shadow:0 10px 24px rgba(0,0,0,.06);transition:.3s;font-weight:500
 }
+.skill-card:hover{transform:translateY(-8px);border-bottom:4px solid var(--accent)}
 
-nav h1::after {
-    content: "";
-    width: 40px;
-    height: 3px;
-    background: #f4b400;
-    position: absolute;
-    left: 0;
-    bottom: -8px;
+/* PROJECTS */
+.projects-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:35px}
+.project-card{
+background:var(--card);padding:28px;border-radius:20px;text-decoration:none;color:inherit;
+box-shadow:0 12px 26px rgba(0,0,0,.07);transition:.3s;display:block
 }
+.project-card h3,.project-card h4{color:var(--green);margin-bottom:12px}
+.project-card p{color:#555;font-size:15px}
+.project-card:hover{transform:translateY(-10px);box-shadow:0 18px 40px rgba(0,0,0,.15)}
 
-nav ul {
-    display: flex;
-    gap: 30px;
-    list-style: none;
+/* CONTACT */
+#contact{background:var(--green);color:#fff;border-radius:40px 40px 0 0;text-align:center}
+.contact-links{display:flex;gap:30px;justify-content:center;margin-top:25px;flex-wrap:wrap}
+.contact-links a{color:var(--accent);text-decoration:none;font-weight:500}
+.contact-links a:hover{text-decoration:underline}
+
+/* FOOTER */
+footer{text-align:center;padding:20px;background:#102c20;color:#aaa}
+
+/* MOBILE */
+@media(max-width:768px){
+.hero h1{font-size:36px}
+section{padding:80px 6%}
+nav{flex-direction:column;gap:12px}
 }
-
-nav ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: 0.3s ease;
-}
-
-nav ul li a:hover {
-    color: #f4b400;
-}
-
-/* ===== SECTION TITLES ===== */
-.section-title {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 40px;
-    position: relative;
-    display: inline-block;
-}
-
-.section-title::after {
-    content: "";
-    width: 50px;
-    height: 4px;
-    background: #f4b400;
-    position: absolute;
-    left: 0;
-    bottom: -10px;
-}
-
-/* ===== ABOUT SECTION ===== */
-#about p {
-    max-width: 900px;
-    font-size: 17px;
-    color: #333;
-}
-
-/* ===== SKILLS ===== */
-.skills-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 25px;
-    margin-top: 40px;
-}
-
-.skill-card {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 16px;
-    text-align: center;
-    font-weight: 500;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-}
-
-.skill-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
-    border-bottom: 4px solid #f4b400;
-}
-
-/* ===== PROJECTS ===== */
-.projects-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-
-.project-card {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 18px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-    transition: 0.3s ease;
-}
-
-.project-card h3 {
-    margin-bottom: 15px;
-    color: #143d2c;
-}
-
-.project-card p {
-    font-size: 15px;
-    color: #555;
-}
-
-.project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
-    border-left: 5px solid #f4b400;
-}
-
-/* ===== CONTACT ===== */
-#contact {
-    background: #143d2c;
-    color: white;
-    border-radius: 25px 25px 0 0;
-}
-
-#contact a {
-    color: #f4b400;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-#contact a:hover {
-    text-decoration: underline;
-}
-
-/* ===== FOOTER ===== */
-footer {
-    text-align: center;
-    padding: 20px;
-    background: #102c20;
-    color: #aaa;
-    font-size: 14px;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-    section {
-        padding: 60px 6%;
-    }
-
-    nav {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-}
-
 </style>
 </head>
-
 <body>
 
 <nav>
-    <h2>Poojitha</h2>
-    <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
+<h2>Poojitha</h2>
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
 </nav>
 
 <section class="hero">
-    <h1>Hello, I'm Poojitha</h1>
-    <h3>Second-Year Computer Science Student | Aspiring Software & Full Stack Developer | Problem Solver</h3>
-    <a href="https://www.linkedin.com/" target="_blank" class="btn">Connect on LinkedIn</a>
+<h1>Hello, I'm Poojitha</h1>
+<h3>Second-Year Computer Science Student | Aspiring Software & Full Stack Developer | Problem Solver</h3>
+<a href="https://www.linkedin.com/" target="_blank" class="btn">Connect on LinkedIn</a>
 </section>
 
 <section id="about" class="about">
-    <h2>About Me</h2>
-    <p>
-    I am a second-year Computer Science student passionate about building practical and impactful software solutions. With strong logical reasoning and problem-solving abilities, I enjoy transforming ideas into structured, functional, and user-friendly applications.
-
-    I have worked on multiple projects across both frontend and backend domains, including developing a Medicover AI Chatbot integrated with MySQL, building Eco Connect — a hackathon project that secured a Top 10 position — and designing Personal Doc, a document management system that highlights my development capabilities and system design approach.
-
-    My strengths include analytical thinking, creativity, consistency, and a leadership mindset. As a fast learner, I continuously strive to improve my backend integration skills and deepen my knowledge in full stack development.
-
-    My long-term goal is to grow into a proficient Software Developer and Full Stack Developer capable of building scalable, efficient, and meaningful real-world applications.
-    </p>
+<h2 class="section-title">About Me</h2>
+<p>I am a second-year Computer Science student passionate about building practical and impactful software solutions. I enjoy transforming ideas into structured and functional applications. I have built projects including an AI healthcare chatbot, Eco Connect hackathon project, and Personal Doc document management system.</p>
 </section>
 
 <section id="skills">
-    <h2>Technical Skills</h2>
-    <div class="skills-container">
-        <div class="skill-box">C Programming</div>
-        <div class="skill-box">Python</div>
-        <div class="skill-box">HTML & CSS</div>
-        <div class="skill-box">JavaScript (Learning & Improving)</div>
-        <div class="skill-box">SQL & MySQL</div>
-        <div class="skill-box">Backend Fundamentals (Flask - Learning Phase)</div>
-    </div>
+<h2 class="section-title">Technical Skills</h2>
+<div class="skills-container">
+<div class="skill-card">C Programming</div>
+<div class="skill-card">Python</div>
+<div class="skill-card">HTML & CSS</div>
+<div class="skill-card">JavaScript</div>
+<div class="skill-card">SQL & MySQL</div>
+<div class="skill-card">Flask Backend Basics</div>
+</div>
 </section>
 
 <section id="projects">
-    <h2>Projects</h2>
-    <div class="projects-container">
-
-        <div class="project-card">
-            <h4>Medicover AI Chatbot</h4>
-            <p>
-                An AI-based healthcare chatbot integrated with MySQL database. Designed frontend interface and structured backend connectivity using Flask for dynamic query handling.
-            </p>
-        </div>
-
-       <a href="https://poojithasudalagunta-source.github.io/eco-network-/" 
-   target="_blank" 
-   class="project-card">
-    
-    <h4>Eco Connect (Top 10 Hackathon Project)</h4>
-    <p>
-        A sustainability-focused platform developed with frontend and local server backend. 
-        Secured Top 10 position in hackathon for innovative environmental solution approach.
-    </p>
-
+<h2 class="section-title">Projects</h2>
+<div class="projects-container">
+<div class="project-card">
+<h4>Medicover AI Chatbot</h4>
+<p>Healthcare chatbot integrated with MySQL and Flask backend for dynamic query handling.</p>
+</div>
+<a href="https://poojithasudalagunta-source.github.io/eco-network-/" target="_blank" class="project-card">
+<h4>Eco Connect</h4>
+<p>Sustainability platform that secured Top 10 in hackathon.</p>
 </a>
-
-
-
-        <div class="project-card">
-            <a href="https://poojithasudalagunta-source.github.io/personalDock/" 
-   target="_blank" 
-   class="project-card">
-
-    <h3>Personal Doc</h3>
-    <p>
-        A document management system with structured frontend architecture.
-        Designed to handle file organization and backend expansion for scalable
-        document storage.
-    </p>
-
+<a href="https://poojithasudalagunta-source.github.io/personalDock/" target="_blank" class="project-card">
+<h4>Personal Doc</h4>
+<p>Structured document management interface designed for scalable storage.</p>
 </a>
-        </div>
-
-        <div class="project-card">
-            <h4>Smart Pantry</h4>
-            <p>
-                Inventory management application built using Kivy with categorized storage system and real-world problem-solving approach.
-            </p>
-        </div>
-
-    </div>
+<div class="project-card">
+<h4>Smart Pantry</h4>
+<p>Inventory manager using Kivy solving real-world storage tracking.</p>
+</div>
+</div>
 </section>
 
-<section id="contact" class="contact">
-    <h2>Contact Me</h2>
-    <a href="mailto:poojithasudalagunta@gmail.com">poojithasudalagunta@gmail.com</a>
-    <a href="https://github.com/poojithasudalagunta-source">GitHub</a>
-    <a href="https://www.linkedin.com/">LinkedIn</a>
+<section id="contact">
+<h2 class="section-title">Contact Me</h2>
+<div class="contact-links">
+<a href="mailto:poojithasudalagunta@gmail.com">Email</a>
+<a href="https://github.com/poojithasudalagunta-source">GitHub</a>
+<a href="www.linkedin.com/in/
+poojithasudalagunta">LinkedIn</a>
+</div>
 </section>
 
-<footer>
-    © 2026 Poojitha | Portfolio
-</footer>
+<footer>© 2026 Poojitha | Portfolio</footer>
 
 </body>
 </html>
-
