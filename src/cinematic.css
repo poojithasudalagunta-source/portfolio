@@ -250,6 +250,23 @@ body::before {
   .primary-nav > a:not(.nav-social):not(.nav-connect) { color: #C9BEB8; border-color: rgba(245,241,237,.09); }
 }
 
+@media (max-width: 1023.98px) {
+  .hero { align-items: start; }
+  .hero-content { width: 100%; }
+  .hero-right { height: auto; min-height: 0; margin-top: 4px; }
+  .hero-aside { position: relative; inset: auto; width: 100%; margin: 0; transform: none; }
+}
+
+@media (max-width: 500px) {
+  .hero { padding-bottom: 34px; }
+  .hero-coordinate { display: none; }
+  .hero-socials { margin-top: 20px; }
+  .hero-footnote { margin-top: 23px; font-size: 7px; letter-spacing: .05em; }
+  .focus-row { min-height: 48px; grid-template-columns: 27px minmax(0, 1fr) 18px; gap: 8px; }
+  .focus-row b { font-size: 11px; }
+  .aside-bottom { padding-top: 12px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero::before { animation: none; }
 }
