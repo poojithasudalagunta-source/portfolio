@@ -359,3 +359,8 @@ body::before {
 .filter-chip { font-size: 11px; }
 .technology-filter select,.search-box input { font-size: 14px; }
 .empty-state p { font-size: 12px; }
+.case-meta-grid > div > span { font-size: 12px; }
+.case-meta-grid > div > b { font-size: 13px; }
+.case-tech .tech-tag { padding: 7px 10px; font-size: 12px; }
+.context-grid h2 { margin-bottom: 10px; font-size: 18px; }
+.context-grid p { font-size: 15px; line-height: 1.8; }
