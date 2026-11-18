@@ -766,16 +766,19 @@ function HomePage() {
 
 function BrandIntro({ onFinish }) {
   const [wordRevealed, setWordRevealed] = useState(false)
+  const [isExpanding, setIsExpanding] = useState(false)
 
   useEffect(() => {
     const finishOnEscape = (event) => {
       if (event.key === 'Escape') onFinish()
     }
     window.addEventListener('keydown', finishOnEscape)
-    const revealTimer = window.setTimeout(() => setWordRevealed(true), 620)
-    const finishTimer = window.setTimeout(onFinish, 2200)
+    const revealTimer = window.setTimeout(() => setWordRevealed(true), 580)
+    const expandTimer = window.setTimeout(() => setIsExpanding(true), 1120)
+    const finishTimer = window.setTimeout(onFinish, 2300)
     return () => {
       window.clearTimeout(revealTimer)
+      window.clearTimeout(expandTimer)
       window.clearTimeout(finishTimer)
       window.removeEventListener('keydown', finishOnEscape)
     }
@@ -785,7 +788,7 @@ function BrandIntro({ onFinish }) {
     <motion.div className="brand-intro" role="dialog" aria-modal="true" aria-labelledby="brand-intro-title" initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.42, ease: easeOut } }}>
       <button className="brand-intro-skip" type="button" onClick={onFinish} autoFocus>Skip intro <span aria-hidden="true">×</span></button>
       <div className="brand-intro-content">
-        <div className={`brand-intro-lockup${wordRevealed ? ' is-revealed' : ''}`}>
+        <div className={`brand-intro-lockup${wordRevealed ? ' is-revealed' : ''}${isExpanding ? ' is-expanding' : ''}`}>
           <h1 id="brand-intro-title" aria-label="Poojitha’s Portfolio">
             <motion.span className="brand-intro-letter" aria-hidden="true" initial={{ opacity: 0, scale: 0.82, y: 18 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 0.45, ease: easeOut }}>P</motion.span>
             {wordRevealed && <motion.span className="brand-intro-rest" initial={{ opacity: 0, clipPath: 'inset(0 0 0 100%)' }} animate={{ opacity: 1, clipPath: 'inset(0 0 0 0%)' }} transition={{ duration: 0.62, ease: easeOut }}>oojitha’s Portfolio</motion.span>}
