@@ -251,12 +251,12 @@ body::before {
 .brand-intro::before { background: radial-gradient(ellipse at 50% 48%,rgba(163,15,32,.3),transparent 42%),radial-gradient(ellipse at 76% 72%,rgba(240,90,36,.12),transparent 37%); }
 .brand-intro::after { background: linear-gradient(180deg,rgba(9,9,13,.18),transparent 45%,rgba(9,9,13,.4)); }
 .brand-intro-content { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; text-align: center; }
-.brand-intro-lockup { transform: scale(1); opacity: 1; transition: opacity .45s ease .7s,transform .75s cubic-bezier(.22,1,.36,1); }
+.brand-intro-lockup { transform: scale(1); opacity: 1; transition: opacity .45s ease .72s,transform .75s cubic-bezier(.22,1,.36,1); }
 .brand-intro h1 { display: flex; align-items: baseline; justify-content: center; margin: 0; color: #F5F1ED; font-size: clamp(1.25rem,5vw,2.35rem); font-weight: 700; line-height: 1.1; letter-spacing: -.055em; white-space: nowrap; }
 .brand-intro-letter { display: inline-block; margin: 0; color: transparent; background: linear-gradient(145deg,#F05A24 5%,#C21B28 46%,#7F0D1A 100%); background-clip: text; -webkit-background-clip: text; font-family: inherit; font-size: clamp(14rem,48vw,38rem); font-weight: 850; line-height: .95; letter-spacing: -.1em; padding-right: .1em; text-shadow: 0 0 85px rgba(163,15,32,.2); transition: font-size .72s cubic-bezier(.22,1,.36,1),letter-spacing .72s cubic-bezier(.22,1,.36,1),padding .72s cubic-bezier(.22,1,.36,1),text-shadow .62s ease; }
 .brand-intro-lockup.is-revealed .brand-intro-letter { font-size: clamp(1.25rem,5vw,2.35rem); letter-spacing: -.055em; padding-right: 0; text-shadow: 0 0 24px rgba(163,15,32,.24); }
 .brand-intro-rest { display: inline-block; overflow: hidden; font-weight: 700; }
-.brand-intro-lockup.is-expanding { transform: scale(1.12); opacity: 0; }
+.brand-intro-lockup.is-expanding { transform: scale(1.28); opacity: 0; }
 .brand-intro-lockup.is-expanding h1 { font-size: clamp(4rem,14vw,9rem); letter-spacing: -.06em; transition: font-size .72s cubic-bezier(.22,1,.36,1),letter-spacing .72s cubic-bezier(.22,1,.36,1); }
 .brand-intro-lockup.is-expanding .brand-intro-letter { font-size: inherit; letter-spacing: inherit; padding-right: 0; }
 .brand-intro-rule { display: block; width: clamp(70px,16vw,118px); height: 2px; margin-top: 22px; transform-origin: center; background: linear-gradient(90deg,#A30F20,#F05A24); box-shadow: 0 0 18px rgba(240,90,36,.35); }
@@ -345,7 +345,7 @@ body::before {
 }
 
 @media (max-width: 500px) {
-  .brand-intro-lockup.is-expanding h1 { font-size: clamp(3.4rem,18vw,6.5rem); }
+  .brand-intro-lockup.is-expanding h1 { font-size: clamp(4.2rem,21vw,7rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {

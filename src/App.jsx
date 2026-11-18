@@ -847,9 +847,9 @@ function BrandIntro({ onFinish }) {
       if (event.key === 'Escape') onFinish()
     }
     window.addEventListener('keydown', finishOnEscape)
-    const revealTimer = window.setTimeout(() => setWordRevealed(true), 580)
-    const expandTimer = window.setTimeout(() => setIsExpanding(true), 1120)
-    const finishTimer = window.setTimeout(onFinish, 2300)
+    const revealTimer = window.setTimeout(() => setWordRevealed(true), 500)
+    const expandTimer = window.setTimeout(() => setIsExpanding(true), 820)
+    const finishTimer = window.setTimeout(onFinish, 2100)
     return () => {
       window.clearTimeout(revealTimer)
       window.clearTimeout(expandTimer)
