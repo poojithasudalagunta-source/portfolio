@@ -765,14 +765,18 @@ function HomePage() {
 }
 
 function BrandIntro({ onFinish }) {
+  const [wordRevealed, setWordRevealed] = useState(false)
+
   useEffect(() => {
     const finishOnEscape = (event) => {
       if (event.key === 'Escape') onFinish()
     }
     window.addEventListener('keydown', finishOnEscape)
-    const timer = window.setTimeout(onFinish, 2200)
+    const revealTimer = window.setTimeout(() => setWordRevealed(true), 620)
+    const finishTimer = window.setTimeout(onFinish, 2200)
     return () => {
-      window.clearTimeout(timer)
+      window.clearTimeout(revealTimer)
+      window.clearTimeout(finishTimer)
       window.removeEventListener('keydown', finishOnEscape)
     }
   }, [onFinish])
@@ -781,13 +785,13 @@ function BrandIntro({ onFinish }) {
     <motion.div className="brand-intro" role="dialog" aria-modal="true" aria-labelledby="brand-intro-title" initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.42, ease: easeOut } }}>
       <button className="brand-intro-skip" type="button" onClick={onFinish} autoFocus>Skip intro <span aria-hidden="true">×</span></button>
       <div className="brand-intro-content">
-        <motion.span className="brand-intro-letter" aria-hidden="true" initial={{ opacity: 0, scale: 0.82, y: 18 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 0.45, ease: easeOut }}>
-          P
-        </motion.span>
-        <motion.h1 id="brand-intro-title" initial={{ opacity: 0, y: 14, clipPath: 'inset(0 0 100% 0)' }} animate={{ opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)' }} transition={{ duration: 0.48, delay: 0.52, ease: easeOut }}>
-          Poojitha’s Portfolio
-        </motion.h1>
-        <motion.span className="brand-intro-rule" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.42, delay: 0.88, ease: easeOut }} aria-hidden="true" />
+        <div className={`brand-intro-lockup${wordRevealed ? ' is-revealed' : ''}`}>
+          <h1 id="brand-intro-title" aria-label="Poojitha’s Portfolio">
+            <motion.span className="brand-intro-letter" aria-hidden="true" initial={{ opacity: 0, scale: 0.82, y: 18 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 0.45, ease: easeOut }}>P</motion.span>
+            {wordRevealed && <motion.span className="brand-intro-rest" initial={{ opacity: 0, clipPath: 'inset(0 0 0 100%)' }} animate={{ opacity: 1, clipPath: 'inset(0 0 0 0%)' }} transition={{ duration: 0.62, ease: easeOut }}>oojitha’s Portfolio</motion.span>}
+          </h1>
+        </div>
+        <motion.span className="brand-intro-rule" initial={{ scaleX: 0 }} animate={{ scaleX: wordRevealed ? 1 : 0 }} transition={{ duration: 0.42, delay: wordRevealed ? 0.2 : 0, ease: easeOut }} aria-hidden="true" />
       </div>
     </motion.div>
   )
@@ -799,12 +803,12 @@ export default function App() {
   const reduced = useReducedMotion()
   const [showIntro, setShowIntro] = useState(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
-    try { return window.sessionStorage.getItem('portfolio-intro-seen') !== 'true' } catch { return true }
+    try { return window.sessionStorage.getItem('portfolio-intro-seen-v2') !== 'true' } catch { return true }
   })
 
   useEffect(() => {
     if (!showIntro) return
-    try { window.sessionStorage.setItem('portfolio-intro-seen', 'true') } catch { /* Session storage is optional. */ }
+    try { window.sessionStorage.setItem('portfolio-intro-seen-v2', 'true') } catch { /* Session storage is optional. */ }
   }, [showIntro])
 
   return (
