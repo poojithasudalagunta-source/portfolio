@@ -258,7 +258,7 @@ body::before {
 .brand-intro-lockup.is-fading { opacity: 0; }
 .brand-intro-rule { display: block; width: clamp(70px,16vw,118px); height: 2px; margin-top: 22px; background: linear-gradient(90deg,#A30F20,#F05A24); box-shadow: 0 0 18px rgba(240,90,36,.35); }
 .brand-intro-controls { position: absolute; top: max(18px,env(safe-area-inset-top)); right: max(18px,env(safe-area-inset-right)); display: flex; align-items: center; gap: 8px; }
-.brand-intro-button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 8px; padding: 0 13px; border: 1px solid rgba(214,172,104,.27); border-radius: 999px; color: #D4C5BC; background: rgba(23,23,25,.64); font: 10px var(--mono); letter-spacing: .04em; cursor: pointer; }
+.brand-intro-button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 8px; padding: 0 13px; border: 1px solid rgba(214,172,104,.27); border-radius: 999px; color: #D4C5BC; background: rgba(23,23,25,.64); font: 11px var(--mono); letter-spacing: .04em; cursor: pointer; }
 .brand-intro-button:hover { border-color: rgba(240,90,36,.6); color: #FFF; }
 .brand-intro-button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 .brand-intro-skip span { color: var(--gold); font-family: inherit; font-size: 18px; line-height: 1; }
@@ -342,3 +342,20 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   .hero::before { animation: none; }
 }
+
+/* Raise the smallest labels and descriptions for easier reading. */
+.primary-nav > a:not(.nav-social):not(.nav-connect),.nav-connect,.hero-socials a,.text-link,.text-link-button,.back-link,.project-card-action { font-size: 12px; }
+.nav-detail-indicator,.eyebrow,.availability,.hero-coordinate,.aside-index,.aside-bottom,.focus-row > span,.visual-index,.visual-label,.project-card-meta,.tech-tag,.results-count,.technology-filter,.skill-group-head > span,.research-status,.research-detail-label,.architecture-top,.architecture-bottom,.step-number,.experience-date,.experience-index,.interest-card-top,.interest-swipe-hint,.contact-link small,.footer-nav > div > span,.footer-panel-bottom,.case-kicker,.case-status,.case-meta-grid > div > span,.case-toc span,.detail-figure figcaption,.detail-gallery figcaption,.boundary-note span { font-size: 10px; }
+.hero-footnote,.fact small,.about-interest-index,.copy-email,.copy-feedback,.footer-nav a,.case-toc a,.boundary-note p,.interest-side { font-size: 11px; }
+.contact-copy > p:not(.eyebrow) { font-size: 14px; }
+.contact-link b { font-size: 13px; }
+.focus-row b,.about-interest-card b,.about-interest-card small,.fact span,.skill-group h3,.skill-pills span,.architecture-step b,.experience-role,.experience-main > p:not(.experience-date):not(.experience-role),.context-grid h2,.context-grid p,.implementation-list li { font-size: 12px; }
+.about-copy { font-size: 14px; }
+.project-card-body > p,.small-note,.research-copy > p:not(.eyebrow):not(.section-copy),.interest-copy { font-size: 13px; }
+.context-grid h2 { font-size: 14px; }
+.footer-intro p { font-size: 12px; }
+.research-copy .research-detail-label { font-size: 10px; }
+.project-card h3,.projects-grid .project-card h3 { font-size: 18px; }
+.filter-chip { font-size: 11px; }
+.technology-filter select,.search-box input { font-size: 14px; }
+.empty-state p { font-size: 12px; }
