@@ -835,24 +835,24 @@ function createIntroSound() {
 
 function BrandIntro({ onFinish }) {
   const [wordRevealed, setWordRevealed] = useState(false)
-  const [isExpanding, setIsExpanding] = useState(false)
+  const [isFading, setIsFading] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(false)
   const [sequence, setSequence] = useState(0)
   const soundRef = useRef(null)
 
   useEffect(() => {
     setWordRevealed(false)
-    setIsExpanding(false)
+    setIsFading(false)
     const finishOnEscape = (event) => {
       if (event.key === 'Escape') onFinish()
     }
     window.addEventListener('keydown', finishOnEscape)
     const revealTimer = window.setTimeout(() => setWordRevealed(true), 500)
-    const expandTimer = window.setTimeout(() => setIsExpanding(true), 820)
+    const fadeTimer = window.setTimeout(() => setIsFading(true), 1450)
     const finishTimer = window.setTimeout(onFinish, 2100)
     return () => {
       window.clearTimeout(revealTimer)
-      window.clearTimeout(expandTimer)
+      window.clearTimeout(fadeTimer)
       window.clearTimeout(finishTimer)
       window.removeEventListener('keydown', finishOnEscape)
     }
@@ -890,13 +890,13 @@ function BrandIntro({ onFinish }) {
         <button className="brand-intro-button brand-intro-skip" type="button" onClick={onFinish} autoFocus>Skip <span aria-hidden="true">×</span></button>
       </div>
       <div className="brand-intro-content">
-        <div className={`brand-intro-lockup${wordRevealed ? ' is-revealed' : ''}${isExpanding ? ' is-expanding' : ''}`}>
+        <div className={`brand-intro-lockup${wordRevealed ? ' is-revealed' : ''}${isFading ? ' is-fading' : ''}`}>
           <h1 id="brand-intro-title" aria-label="Poojitha’s Portfolio">
-            <motion.span className="brand-intro-letter" aria-hidden="true" initial={{ opacity: 0, scale: 0.82, y: 18 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 0.45, ease: easeOut }}>P</motion.span>
+            <motion.span className="brand-intro-letter" aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, ease: easeOut }}>P</motion.span>
             {wordRevealed && <motion.span className="brand-intro-rest" initial={{ opacity: 0, clipPath: 'inset(0 0 0 100%)' }} animate={{ opacity: 1, clipPath: 'inset(0 0 0 0%)' }} transition={{ duration: 0.62, ease: easeOut }}>oojitha’s Portfolio</motion.span>}
           </h1>
         </div>
-        <motion.span className="brand-intro-rule" initial={{ scaleX: 0 }} animate={{ scaleX: wordRevealed ? 1 : 0 }} transition={{ duration: 0.42, delay: wordRevealed ? 0.2 : 0, ease: easeOut }} aria-hidden="true" />
+        <motion.span className="brand-intro-rule" initial={{ opacity: 0 }} animate={{ opacity: wordRevealed ? 1 : 0 }} transition={{ duration: 0.3, delay: wordRevealed ? 0.2 : 0, ease: easeOut }} aria-hidden="true" />
       </div>
     </motion.div>
   )
