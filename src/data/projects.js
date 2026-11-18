@@ -1,4 +1,5 @@
 const owner = 'https://github.com/poojithasudalagunta-source'
+const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
 export const projects = [
   {
@@ -22,13 +23,13 @@ export const projects = [
     ],
     stack: ['React Native', 'Expo', 'Supabase', 'AsyncStorage', 'Tesseract.js', 'Groq API'],
     architecture: ['Expo screens', 'Pantry and recipe services', 'Candidate recipe scoring', 'Groq response using constrained context'],
-    image: '/assets/smart-pantry-kitchen.png',
+    image: asset('smart-pantry-kitchen.png'),
     imageAlt: 'Illustration included with the Smart Pantry repository, showing a kitchen dashboard concept.',
     imageCaption: 'Feature artwork from the repository; it is illustrative, not a captured app screen.',
     extraImages: [
-      { src: '/assets/smart-pantry-meal-plan.png', alt: 'Meal planning feature illustration from the Smart Pantry repository.' },
-      { src: '/assets/smart-pantry-bill-scanner.png', alt: 'Bill scanning feature illustration from the Smart Pantry repository.' },
-      { src: '/assets/smart-pantry-recipes.png', alt: 'Recipe recommendation feature illustration from the Smart Pantry repository.' },
+      { src: asset('smart-pantry-meal-plan.png'), alt: 'Meal planning feature illustration from the Smart Pantry repository.' },
+      { src: asset('smart-pantry-bill-scanner.png'), alt: 'Bill scanning feature illustration from the Smart Pantry repository.' },
+      { src: asset('smart-pantry-recipes.png'), alt: 'Recipe recommendation feature illustration from the Smart Pantry repository.' },
     ],
     boundary: 'The repository contains feature artwork but no verified in-app screenshots. Some artwork describes concepts not confirmed in the inspected code, so the portfolio sticks to code-backed features.',
   },
@@ -75,13 +76,13 @@ export const projects = [
     ],
     stack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express', 'MongoDB', 'Mongoose'],
     architecture: ['Browser pages', 'JSON HTTP requests', 'Express routes', 'Mongoose models and MongoDB'],
-    image: '/assets/personaldock-overview.png',
+    image: asset('personaldock-overview.png'),
     imageAlt: 'Decorative home illustration included in PersonalDock project assets.',
     imageCaption: 'Illustration from the repository. The public repo did not contain product screenshots.',
     extraImages: [
-      { src: '/assets/personaldock-planner.png', alt: 'Decorative planner illustration included in PersonalDock assets.' },
-      { src: '/assets/personaldock-tracker.png', alt: 'Decorative tracker illustration included in PersonalDock assets.' },
-      { src: '/assets/personaldock-library.png', alt: 'Decorative library illustration included in PersonalDock assets.' },
+      { src: asset('personaldock-planner.png'), alt: 'Decorative planner illustration included in PersonalDock assets.' },
+      { src: asset('personaldock-tracker.png'), alt: 'Decorative tracker illustration included in PersonalDock assets.' },
+      { src: asset('personaldock-library.png'), alt: 'Decorative library illustration included in PersonalDock assets.' },
     ],
     boundary: 'The tracked PNGs are illustrations, not screenshots. The knowledge area stores and retrieves user-provided notes; source evidence does not support describing it as an LLM assistant.',
   },

@@ -285,7 +285,8 @@ function ProjectVisual({ project, compact = false }) {
   if (project.image) {
     return (
       <div className={`project-visual project-visual-image${compact ? ' visual-compact' : ''}`}>
-        <img src={project.image} alt={project.imageAlt} loading="lazy" />
+        <div className="visual-fallback" aria-hidden="true"><div className="visual-glow" /><Icon className="visual-icon" strokeWidth={1.1} /></div>
+        <img src={project.image} alt={project.imageAlt} loading="lazy" onError={(event) => { event.currentTarget.hidden = true }} />
         <span className="visual-label">PROJECT ARTWORK</span>
       </div>
     )
@@ -670,7 +671,7 @@ function DetailImage({ project }) {
   const reduced = useReducedMotion()
   return (
     <motion.figure className="detail-figure" initial={reduced ? false : { opacity: 0, y: 20, clipPath: 'inset(0 0 12% 0)' }} whileInView={{ opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)' }} viewport={{ once: true, amount: 0.18 }} transition={reduced ? { duration: 0 } : { duration: 0.75, ease: easeOut }}>
-      <div className="detail-image-frame"><img src={project.image} alt={project.imageAlt} loading="lazy" /></div>
+      <div className="detail-image-frame"><img src={project.image} alt={project.imageAlt} loading="lazy" onError={(event) => { event.currentTarget.hidden = true }} /></div>
       <figcaption>{project.imageCaption}</figcaption>
     </motion.figure>
   )
@@ -725,7 +726,7 @@ function ProjectDetails({ project }) {
             {project.image && <DetailImage project={project} />}
             {project.extraImages?.length > 0 && (
               <div className="detail-gallery">
-                {project.extraImages.map((image, index) => <motion.figure key={image.src} initial={reduced ? false : { opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={reduced ? { duration: 0 } : { ...spring, delay: index * 0.1 }}><img src={image.src} alt={image.alt} loading="lazy" decoding="async" /><figcaption>Repository feature artwork</figcaption></motion.figure>)}
+                {project.extraImages.map((image, index) => <motion.figure key={image.src} initial={reduced ? false : { opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={reduced ? { duration: 0 } : { ...spring, delay: index * 0.1 }}><img src={image.src} alt={image.alt} loading="lazy" decoding="async" onError={(event) => { event.currentTarget.hidden = true }} /><figcaption>Repository feature artwork</figcaption></motion.figure>)}
               </div>
             )}
             <motion.section className="case-section case-implementation" id="case-build" variants={reveal} {...sectionReveal}>

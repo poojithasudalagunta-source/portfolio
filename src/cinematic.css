@@ -124,6 +124,10 @@ body::before {
 .visual-icon { color: var(--gold); }
 .visual-index,.visual-label { color: #B59E8C; }
 .project-visual-image .visual-label { color: #E8D9C8; background: rgba(23,23,25,.86); }
+.project-visual-image .visual-fallback { position: absolute; inset: 0; z-index: 0; display: grid; place-items: center; pointer-events: none; }
+.project-visual-image .visual-fallback .visual-glow { z-index: 0; }
+.project-visual-image img { position: relative; z-index: 1; }
+.project-visual-image .visual-label { z-index: 2; }
 .project-card-meta { color: #A79D99; }
 .meta-dot { background: var(--gold); }
 .project-card h3 { color: var(--warm-white); }
