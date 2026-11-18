@@ -1,6 +1,6 @@
 # Poojitha’s Portfolio
 
-A responsive React portfolio built with Vite. It features a light glass visual system, scroll-linked section transitions, Framer Motion interactions, a selectively loaded GSAP ScrollTrigger effect in the hero, searchable and filterable projects, and hash-routed project case studies.
+A responsive React portfolio built with Vite. It features a cinematic dark visual system, scroll-linked section transitions, Framer Motion interactions, a selectively loaded GSAP ScrollTrigger effect in the hero, searchable and filterable projects, and hash-routed project case studies.
 
 ## Requirements
 
@@ -40,6 +40,6 @@ Motion respects `prefers-reduced-motion`. GSAP ScrollTrigger is loaded only for 
 
 ## Deploy to GitHub Pages
 
-The repository includes `.github/workflows/deploy.yml`. In the repository’s GitHub settings, choose **Settings → Pages → GitHub Actions** as the deployment source. The workflow installs dependencies, builds the site, and publishes the `dist` directory when changes are pushed to `main`. It can also be started manually from the repository’s **Actions** tab.
+The repository includes `.github/workflows/deploy.yml`, which publishes `dist` when changes are pushed to `main`. The build also synchronizes the generated site entry and assets to the repository root for repositories still using branch-root Pages publishing. The editable Vite HTML template is `index.source.html`; `npm run dev` and `npm run build` restore it before starting Vite.
 
-Vite’s relative `base` setting and the existing workflow are configured for this static deployment. The workflow has not been run from this workspace. No commit or push was performed.
+Vite’s relative `base` setting supports the repository project path on GitHub Pages.
