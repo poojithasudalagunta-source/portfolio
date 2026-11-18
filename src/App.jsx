@@ -772,7 +772,7 @@ function createIntroSound() {
   try {
     const context = new AudioContextClass()
     const master = context.createGain()
-    master.gain.value = 0.68
+    master.gain.value = 0.9
     master.connect(context.destination)
     const now = context.currentTime
 
@@ -796,15 +796,16 @@ function createIntroSound() {
     swell.frequency.setValueAtTime(74, now)
     swell.frequency.exponentialRampToValueAtTime(128, now + 1.18)
     swellGain.gain.setValueAtTime(0.0001, now)
-    swellGain.gain.exponentialRampToValueAtTime(0.055, now + 0.24)
+    swellGain.gain.exponentialRampToValueAtTime(0.1, now + 0.24)
     swellGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.28)
     swell.connect(swellGain)
     swellGain.connect(master)
     swell.start(now)
     swell.stop(now + 1.32)
 
-    tone(880, now + 0.04, 0.62, 0.045)
-    tone(1174, now + 0.13, 0.72, 0.027)
+    tone(392, now, 0.52, 0.08)
+    tone(880, now + 0.04, 0.62, 0.075)
+    tone(1174, now + 0.13, 0.72, 0.05)
 
     const noiseBuffer = context.createBuffer(1, Math.ceil(context.sampleRate * 0.9), context.sampleRate)
     const noiseData = noiseBuffer.getChannelData(0)
@@ -817,7 +818,7 @@ function createIntroSound() {
     filter.frequency.setValueAtTime(1050, now + 0.92)
     filter.frequency.exponentialRampToValueAtTime(260, now + 1.8)
     whooshGain.gain.setValueAtTime(0.0001, now + 0.92)
-    whooshGain.gain.exponentialRampToValueAtTime(0.05, now + 1.14)
+    whooshGain.gain.exponentialRampToValueAtTime(0.085, now + 1.14)
     whooshGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8)
     noise.connect(filter)
     filter.connect(whooshGain)
@@ -884,7 +885,7 @@ function BrandIntro({ onFinish }) {
     <motion.div className="brand-intro" role="dialog" aria-modal="true" aria-labelledby="brand-intro-title" initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.42, ease: easeOut } }}>
       <div className="brand-intro-controls">
         <button className="brand-intro-button" type="button" onClick={toggleSound} aria-pressed={soundEnabled} aria-label={soundEnabled ? 'Turn intro sound off' : 'Turn intro sound on'}>
-          {soundEnabled ? <Volume2 size={15} /> : <VolumeX size={15} />} {soundEnabled ? 'Sound on' : 'Sound off'}
+          {soundEnabled ? <Volume2 size={15} /> : <VolumeX size={15} />} {soundEnabled ? 'Sound on' : 'Play sound'}
         </button>
         <button className="brand-intro-button brand-intro-skip" type="button" onClick={onFinish} autoFocus>Skip <span aria-hidden="true">×</span></button>
       </div>
@@ -907,12 +908,12 @@ export default function App() {
   const reduced = useReducedMotion()
   const [showIntro, setShowIntro] = useState(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
-    try { return window.sessionStorage.getItem('portfolio-intro-seen-v2') !== 'true' } catch { return true }
+    try { return window.sessionStorage.getItem('portfolio-intro-seen-v3') !== 'true' } catch { return true }
   })
 
   useEffect(() => {
     if (!showIntro) return
-    try { window.sessionStorage.setItem('portfolio-intro-seen-v2', 'true') } catch { /* Session storage is optional. */ }
+    try { window.sessionStorage.setItem('portfolio-intro-seen-v3', 'true') } catch { /* Session storage is optional. */ }
   }, [showIntro])
 
   return (
