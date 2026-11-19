@@ -18,9 +18,6 @@ import {
   Github,
   GraduationCap,
   Layers3,
-  MoreHorizontal,
-  SquarePen,
-  FolderOpen,
   Leaf,
   Mail,
   Menu,
@@ -28,6 +25,8 @@ import {
   Network,
   Search,
   Sparkles,
+  Volume2,
+  VolumeX,
   X,
 } from 'lucide-react'
 import { categories, featuredProjects, portfolio, projectCategory, projects, skills } from './data/projects.js'
@@ -767,73 +766,142 @@ function HomePage() {
   )
 }
 
-function WorkspaceStart({ onFinish }) {
-  const [activeRail, setActiveRail] = useState('More')
-  const [selected, setSelected] = useState('Open the project folder')
-  const railItems = [
-    ['Images', Layers3],
-    ['History', Clock3],
-    ['Library', BookOpen],
-    ['Explore', Network],
-    ['More', MoreHorizontal],
-  ]
-  const groups = [
-    { name: 'intro', tasks: ['Open the project folder'] },
-    { name: 'toc', tasks: ['Clone and edit the project', 'Fill ICAROB 2027 registration PDF'] },
-    { name: 'samsung pro', tasks: ['Complete ICAROB 2027 registration', 'Fill ICAROB 2027 registration PDF', 'Review ConvFill presentation'] },
-    { name: 'grandpa-ai', tasks: ['Stabilize Phase 2A database and auth'] },
-  ]
+function createIntroSound() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext
+  if (!AudioContextClass) return null
+  try {
+    const context = new AudioContextClass()
+    const master = context.createGain()
+    master.gain.value = 0.9
+    master.connect(context.destination)
+    const now = context.currentTime
+
+    const tone = (frequency, startAt, duration, volume) => {
+      const oscillator = context.createOscillator()
+      const envelope = context.createGain()
+      oscillator.type = 'sine'
+      oscillator.frequency.setValueAtTime(frequency, startAt)
+      oscillator.connect(envelope)
+      envelope.connect(master)
+      envelope.gain.setValueAtTime(0.0001, startAt)
+      envelope.gain.exponentialRampToValueAtTime(volume, startAt + 0.045)
+      envelope.gain.exponentialRampToValueAtTime(0.0001, startAt + duration)
+      oscillator.start(startAt)
+      oscillator.stop(startAt + duration + 0.03)
+    }
+
+    const swell = context.createOscillator()
+    const swellGain = context.createGain()
+    swell.type = 'triangle'
+    swell.frequency.setValueAtTime(74, now)
+    swell.frequency.exponentialRampToValueAtTime(128, now + 1.18)
+    swellGain.gain.setValueAtTime(0.0001, now)
+    swellGain.gain.exponentialRampToValueAtTime(0.1, now + 0.24)
+    swellGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.28)
+    swell.connect(swellGain)
+    swellGain.connect(master)
+    swell.start(now)
+    swell.stop(now + 1.32)
+
+    tone(392, now, 0.52, 0.08)
+    tone(880, now + 0.04, 0.62, 0.075)
+    tone(1174, now + 0.13, 0.72, 0.05)
+
+    const noiseBuffer = context.createBuffer(1, Math.ceil(context.sampleRate * 0.9), context.sampleRate)
+    const noiseData = noiseBuffer.getChannelData(0)
+    for (let index = 0; index < noiseData.length; index += 1) noiseData[index] = (Math.random() * 2 - 1) * 0.34
+    const noise = context.createBufferSource()
+    const filter = context.createBiquadFilter()
+    const whooshGain = context.createGain()
+    noise.buffer = noiseBuffer
+    filter.type = 'lowpass'
+    filter.frequency.setValueAtTime(1050, now + 0.92)
+    filter.frequency.exponentialRampToValueAtTime(260, now + 1.8)
+    whooshGain.gain.setValueAtTime(0.0001, now + 0.92)
+    whooshGain.gain.exponentialRampToValueAtTime(0.085, now + 1.14)
+    whooshGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8)
+    noise.connect(filter)
+    filter.connect(whooshGain)
+    whooshGain.connect(master)
+    noise.start(now + 0.92)
+    noise.stop(now + 1.82)
+
+    void context.resume().catch(() => {})
+    return { context, master }
+  } catch {
+    return null
+  }
+}
+
+function BrandIntro({ onFinish }) {
+  const [wordRevealed, setWordRevealed] = useState(false)
+  const [isFading, setIsFading] = useState(false)
+  const [soundEnabled, setSoundEnabled] = useState(false)
+  const [sequence, setSequence] = useState(0)
+  const soundRef = useRef(null)
 
   useEffect(() => {
-    const onKeyDown = (event) => { if (event.key === 'Escape') onFinish() }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [onFinish])
+    setWordRevealed(false)
+    setIsFading(false)
+    const finishOnEscape = (event) => {
+      if (event.key === 'Escape') onFinish()
+    }
+    window.addEventListener('keydown', finishOnEscape)
+    const revealTimer = window.setTimeout(() => setWordRevealed(true), 500)
+    const fadeTimer = window.setTimeout(() => setIsFading(true), 1450)
+    const finishTimer = window.setTimeout(onFinish, 2100)
+    return () => {
+      window.clearTimeout(revealTimer)
+      window.clearTimeout(fadeTimer)
+      window.clearTimeout(finishTimer)
+      window.removeEventListener('keydown', finishOnEscape)
+    }
+  }, [onFinish, sequence])
+
+  useEffect(() => () => {
+    soundRef.current?.context.close().catch(() => {})
+  }, [])
+
+  const toggleSound = () => {
+    if (soundEnabled) {
+      const sound = soundRef.current
+      if (sound) {
+        sound.master.gain.setTargetAtTime(0, sound.context.currentTime, 0.04)
+        window.setTimeout(() => sound.context.close().catch(() => {}), 140)
+        soundRef.current = null
+      }
+      setSoundEnabled(false)
+      return
+    }
+
+    const sound = createIntroSound()
+    if (!sound) return
+    soundRef.current = sound
+    setSoundEnabled(true)
+    setSequence((current) => current + 1)
+  }
 
   return (
-    <motion.div className="brand-intro codex-start" role="dialog" aria-modal="true" aria-labelledby="codex-start-title" initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.3, ease: easeOut } }}>
-      <nav className="start-rail" aria-label="Main navigation">
-        {railItems.map(([label, Icon]) => (
-          <button key={label} className={`start-rail-button${activeRail === label ? ' is-active' : ''}`} aria-label={label} title={label} onClick={() => setActiveRail(label)}>
-            <Icon size={27} strokeWidth={1.8} />
-          </button>
-        ))}
-      </nav>
-      <aside className="start-sidebar" aria-label="Chats and projects">
-        <button className="start-new-chat" type="button" onClick={() => setSelected('New chat')}>
-          <SquarePen size={23} strokeWidth={1.8} /><span>New chat</span>
+    <motion.div className="brand-intro" role="dialog" aria-modal="true" aria-labelledby="brand-intro-title" initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.42, ease: easeOut } }}>
+      <div className="brand-intro-controls">
+        <button className="brand-intro-button" type="button" onClick={toggleSound} aria-pressed={soundEnabled} aria-label={soundEnabled ? 'Turn intro sound off' : 'Turn intro sound on'}>
+          {soundEnabled ? <Volume2 size={15} /> : <VolumeX size={15} />} {soundEnabled ? 'Sound on' : 'Play sound'}
         </button>
-        <div className="start-sidebar-scroll">
-          <section className="start-section start-pinned">
-            <h2>Pinned</h2>
-            <button className={`start-chat-row${selected === 'AI Support Automation Design' ? ' is-selected' : ''}`} onClick={() => setSelected('AI Support Automation Design')}>AI Support Automation Design</button>
-          </section>
-          <section className="start-section start-projects">
-            <h2>Projects</h2>
-            {groups.map((group) => (
-              <div className="start-project-group" key={group.name}>
-                <button className="start-project-name" onClick={() => setSelected(group.name)}><FolderOpen size={24} strokeWidth={1.8} /><span>{group.name}</span></button>
-                {group.tasks.map((task) => (
-                  <button key={`${group.name}-${task}`} className={`start-task-row${selected === task ? ' is-selected' : ''}`} onClick={() => setSelected(task)}>{task}</button>
-                ))}
-              </div>
-            ))}
-            <button className="start-open-portfolio" onClick={onFinish}>Open Poojitha’s portfolio <ArrowUpRight size={15} /></button>
-          </section>
+        <button className="brand-intro-button brand-intro-skip" type="button" onClick={onFinish} autoFocus>Skip <span aria-hidden="true">×</span></button>
+      </div>
+      <div className="brand-intro-content">
+        <div className={`brand-intro-lockup${wordRevealed ? ' is-revealed' : ''}${isFading ? ' is-fading' : ''}`}>
+          <h1 id="brand-intro-title" aria-label="Poojitha’s Portfolio">
+            <motion.span className="brand-intro-letter" aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25, ease: easeOut }}>P</motion.span>
+            {wordRevealed && <motion.span className="brand-intro-rest" initial={{ opacity: 0, clipPath: 'inset(0 0 0 100%)' }} animate={{ opacity: 1, clipPath: 'inset(0 0 0 0%)' }} transition={{ duration: 0.62, ease: easeOut }}>oojitha’s Portfolio</motion.span>}
+          </h1>
         </div>
-      </aside>
-      <section className="start-main-pane" aria-label="Workspace preview">
-        <header className="start-main-header"><span className="start-mark">P<span>.</span></span><span>Workspace</span></header>
-        <div className="start-main-content">
-          <p id="codex-start-title">PROJECT SPACE</p>
-          <h1>{selected}</h1>
-          <span>Your projects and conversations, all in one place.</span>
-          <button onClick={onFinish}>Open the portfolio <ArrowUpRight size={15} /></button>
-        </div>
-      </section>
+        <motion.span className="brand-intro-rule" initial={{ opacity: 0 }} animate={{ opacity: wordRevealed ? 1 : 0 }} transition={{ duration: 0.3, delay: wordRevealed ? 0.2 : 0, ease: easeOut }} aria-hidden="true" />
+      </div>
     </motion.div>
   )
 }
+
 export default function App() {
   const projectId = useRoute()
   const project = projects.find((entry) => entry.id === projectId)
@@ -850,7 +918,7 @@ export default function App() {
 
   return (
     <MotionSystem>
-      <AnimatePresence>{showIntro && <WorkspaceStart key="workspace-start" onFinish={() => setShowIntro(false)} />}</AnimatePresence>
+      <AnimatePresence>{showIntro && <BrandIntro key="brand-intro" onFinish={() => setShowIntro(false)} />}</AnimatePresence>
       <a href="#main-content" className="skip-link">Skip to content</a>
       <Navbar detail={Boolean(projectId)} />
       <ScrollProgress />
@@ -866,4 +934,3 @@ export default function App() {
     </MotionSystem>
   )
 }
-
