@@ -18,6 +18,9 @@ import {
   Github,
   GraduationCap,
   Layers3,
+  MoreHorizontal,
+  SquarePen,
+  FolderOpen,
   Leaf,
   Mail,
   Menu,
@@ -902,23 +905,84 @@ function BrandIntro({ onFinish }) {
   )
 }
 
+function WorkspaceHome({ onOpenPortfolio }) {
+  const [activeRail, setActiveRail] = useState('More')
+  const [selected, setSelected] = useState('Open the project folder')
+  const railItems = [
+    ['Images', Layers3],
+    ['History', Clock3],
+    ['Library', BookOpen],
+    ['Explore', Network],
+    ['More', MoreHorizontal],
+  ]
+  const groups = [
+    { name: 'intro', tasks: ['Open the project folder'] },
+    { name: 'toc', tasks: ['Clone and edit the project', 'Fill ICAROB 2027 registration PDF'] },
+    { name: 'samsung pro', tasks: ['Complete ICAROB 2027 registration', 'Fill ICAROB 2027 registration PDF', 'Review ConvFill presentation'] },
+    { name: 'grandpa-ai', tasks: ['Stabilize Phase 2A database and auth'] },
+  ]
+
+  return (
+    <main className="codex-workspace">
+      <nav className="codex-rail" aria-label="Main navigation">
+        <div className="codex-rail-items">
+          {railItems.map(([label, Icon]) => (
+            <button key={label} className={`codex-rail-button${activeRail === label ? ' is-active' : ''}`} aria-label={label} title={label} onClick={() => setActiveRail(label)}>
+              <Icon size={27} strokeWidth={1.8} />
+            </button>
+          ))}
+        </div>
+      </nav>
+      <aside className="codex-sidebar" aria-label="Chats and projects">
+        <button className="codex-new-chat" onClick={() => setSelected('New chat')}>
+          <SquarePen size={23} strokeWidth={1.8} /><span>New chat</span>
+        </button>
+        <div className="codex-sidebar-scroll">
+          <section className="codex-sidebar-section codex-pinned">
+            <h2>Pinned</h2>
+            <button className={`codex-chat-row${selected === 'AI Support Automation Design' ? ' is-selected' : ''}`} onClick={() => setSelected('AI Support Automation Design')}>AI Support Automation Design</button>
+          </section>
+          <section className="codex-sidebar-section codex-projects">
+            <h2>Projects</h2>
+            {groups.map((group) => (
+              <div className="codex-project-group" key={group.name}>
+                <button className="codex-project-name" onClick={() => setSelected(group.name)}><FolderOpen size={24} strokeWidth={1.8} /><span>{group.name}</span></button>
+                <div className="codex-project-tasks">
+                  {group.tasks.map((task) => (
+                    <button key={`${group.name}-${task}`} className={`codex-task-row${selected === task ? ' is-selected' : ''}`} onClick={() => setSelected(task)}>{task}</button>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <button className="codex-open-portfolio" onClick={onOpenPortfolio}>Open Poojitha’s portfolio <ArrowUpRight size={15} /></button>
+          </section>
+        </div>
+      </aside>
+      <section className="codex-main-pane" aria-label="Workspace content">
+        <header className="codex-main-header"><span className="codex-workspace-mark">P<span>.</span></span><span>Workspace</span></header>
+        <div className="codex-main-content">
+          <p>PROJECT SPACE</p>
+          <h1>{selected}</h1>
+          <span>Your projects and conversations, all in one place.</span>
+          <button onClick={onOpenPortfolio}>Open the portfolio <ArrowUpRight size={15} /></button>
+        </div>
+      </section>
+    </main>
+  )
+}
+
 export default function App() {
   const projectId = useRoute()
   const project = projects.find((entry) => entry.id === projectId)
   const reduced = useReducedMotion()
-  const [showIntro, setShowIntro] = useState(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
-    try { return window.sessionStorage.getItem('portfolio-intro-seen-v3') !== 'true' } catch { return true }
-  })
+  const [showWorkspace, setShowWorkspace] = useState(() => !currentProjectId())
 
-  useEffect(() => {
-    if (!showIntro) return
-    try { window.sessionStorage.setItem('portfolio-intro-seen-v3', 'true') } catch { /* Session storage is optional. */ }
-  }, [showIntro])
+  if (showWorkspace && !projectId) {
+    return <MotionSystem><WorkspaceHome onOpenPortfolio={() => setShowWorkspace(false)} /></MotionSystem>
+  }
 
   return (
     <MotionSystem>
-      <AnimatePresence>{showIntro && <BrandIntro key="brand-intro" onFinish={() => setShowIntro(false)} />}</AnimatePresence>
       <a href="#main-content" className="skip-link">Skip to content</a>
       <Navbar detail={Boolean(projectId)} />
       <ScrollProgress />
@@ -934,3 +998,4 @@ export default function App() {
     </MotionSystem>
   )
 }
+
